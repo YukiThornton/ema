@@ -1,12 +1,24 @@
 <template lang="pug">
-  .ema-list ema-list
+  .ema-list
+    EmaPlaque(v-for='ema in emas' :ema='ema' :key='ema.id')
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapState, mapActions } from 'vuex';
+import { Component, Vue } from 'vue-property-decorator';
+import EmaPlaque from '@/components/EmaPlaque.vue';
 
-@Component
+@Component({
+  components: { EmaPlaque },
+  computed: mapState(['emas']),
+  methods: mapActions(['searchEmas']),
+})
 export default class EmaList extends Vue {
+  private searchEmas!: () => {};
+
+  private mounted() {
+    this.searchEmas();
+  }
 }
 </script>
 
