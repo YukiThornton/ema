@@ -1,7 +1,11 @@
-<template>
-  <div id="app">
-    <router-view/>
-  </div>
+<template lang="pug">
+  #app
+    .links
+      router-link(to="/")
+        a home
+      router-link(to="/new")
+        a new
+    router-view
 </template>
 
 <style lang="scss">

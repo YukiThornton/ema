@@ -1,8 +1,7 @@
-<template>
-  <div class="home">
-    Home
-    <EmaList />
-  </div>
+<template lang="pug">
+  .home
+    span home!
+    EmaList
 </template>
 
 <script lang="ts">

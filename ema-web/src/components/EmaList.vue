@@ -1,7 +1,5 @@
-<template>
-  <div class="ema-list">
-    ema-list
-  </div>
+<template lang="pug">
+  .ema-list ema-list
 </template>
 
 <script lang="ts">
