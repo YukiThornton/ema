@@ -1,0 +1,31 @@
+{
+    "emas": [
+        {
+            "id": 1,
+            "user-id": 1,
+            "type": "wish",
+            "status": "open",
+            "content": {
+                "text": "Wish 1"
+            }
+        },
+        {
+            "id": 2,
+            "user-id": 1,
+            "type": "goal",
+            "status": "open",
+            "content": {
+                "text": "Goal 1"
+            }
+        },
+        {
+            "id": 3,
+            "user-id": 1,
+            "type": "wish",
+            "status": "open",
+            "content": {
+                "text": "Wish 2"
+            }
+        }
+    ]
+}
