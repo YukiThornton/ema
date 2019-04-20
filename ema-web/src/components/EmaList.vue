@@ -24,4 +24,8 @@ export default class EmaList extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.ema-list {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
