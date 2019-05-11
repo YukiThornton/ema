@@ -2,11 +2,13 @@
  {:duct.core/project-ns ema-api
 
   :duct.router/ataraxy
-  {:routes {[:get "/example"] [:ema-api.handler/example]
-            [:get "/emas"] [:ema-api.handler/emas]}}
+  {:routes {"/emas" {[:get] [:ema-api.handler/emas]}
+            "/ema" {[:post {body :body-params}] [:ema-api.handler/create-ema body]}}}
 
-  :ema-api.handler/example
-  {}}
+  :duct.server.http/jetty {:port 3004}
+
+  :ema-api.handler/emas {}
+  :ema-api.handler/create-ema {}}
 
  :duct.profile/dev   #duct/include "dev"
  :duct.profile/local #duct/include "local"
