@@ -7,6 +7,7 @@
 import { mapState, mapActions } from 'vuex';
 import { Component, Vue } from 'vue-property-decorator';
 import EmaPlaque from '@/components/EmaPlaque.vue';
+import Ema from '@/models/Ema';
 
 @Component({
   components: { EmaPlaque },
@@ -14,10 +15,13 @@ import EmaPlaque from '@/components/EmaPlaque.vue';
   methods: mapActions(['searchEmas']),
 })
 export default class EmaList extends Vue {
+  private emas!: Ema[];
   private searchEmas!: () => {};
 
   private mounted() {
-    this.searchEmas();
+    if (this.emas.length === 0) {
+      this.searchEmas();
+    }
   }
 }
 </script>

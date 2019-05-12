@@ -1,25 +1,19 @@
 import Ema from '@/models/Ema';
 import EmaContent from '@/models/EmaContent';
-
-export interface EmasResponse {
-    emas: [{
-        id: number;
-        'user-id': number;
-        type: string;
-        status: string;
-        content: {
-            text: string;
-        };
-    }];
-}
+import { EmaListJson, EmaCreationJson } from '@/persistence/EmaApiClient';
 
 export default class EmaFactory {
-    public static createListFromJson(jsonResponse: EmasResponse): Ema[] {
-        if (!jsonResponse.emas || jsonResponse.emas.length <= 0) {
+    public static createListFromJson(json: EmaListJson): Ema[] {
+        if (!json.emas || json.emas.length <= 0) {
             return [];
         }
-        return jsonResponse.emas.map((ema) => {
+        return json.emas.map((ema) => {
             return new Ema(ema.id, ema['user-id'], ema.type, ema.status, new EmaContent(ema.content.text));
         });
+    }
+
+    public static createEmaFromJson(json: EmaCreationJson): Ema {
+        const ema = json.ema;
+        return new Ema(ema.id, ema['user-id'], ema.type, ema.status, new EmaContent(ema.content.text));
     }
 }

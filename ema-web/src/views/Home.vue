@@ -1,6 +1,5 @@
 <template lang="pug">
   .home
-    span home!
     EmaList
 </template>
 
