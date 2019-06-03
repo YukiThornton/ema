@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ema-web-deployment
+  labels:
+    app: ema-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ema-web
+  template:
+    metadata: 
+      labels:
+        app: ema-web
+    spec:
+      containers:
+      - name: ema-web
+        image: ema/ema-web
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ema-web-service
+  labels:
+    app: ema-web
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: ema-web
+
