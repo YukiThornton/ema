@@ -24,11 +24,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ema-api-service
+  name: ema-api
   labels:
     app: ema-api
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 3000
   selector:

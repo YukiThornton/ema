@@ -84,10 +84,10 @@ export default class EmaApiClient {
         if (!response.ok) {
             throw new Error(`getAllEmas returns ${response.status}`);
         }
-        // return (await response.json()) as EmaListJson;
-        const json = (await response.json()) as EmaListJson;
-        if (!json.emas) { return localEmaList; } // TODO remove this line
-        return json;
+        return (await response.json()) as EmaListJson;
+        // const json = (await response.json()) as EmaListJson;
+        // if (!json.emas) { return localEmaList; } // TODO remove this line
+        // return json;
 }
 
     public static async createEma(userId: number, contentText: string): Promise<EmaCreationJson> {
@@ -103,10 +103,10 @@ export default class EmaApiClient {
         if (response.status !== 201) {
             throw new Error(`createEma returns ${response.status}`);
         }
-        // return (await response.json()) as EmaCreationJson;
-        const json = (await response.json()) as EmaCreationJson;
-        if (!json.ema) { return localEmaCreationResult; } // TODO remove this line
-        return json;
+        return (await response.json()) as EmaCreationJson;
+        // const json = (await response.json()) as EmaCreationJson;
+        // if (!json.ema) { return localEmaCreationResult; } // TODO remove this line
+        // return json;
     }
 
     private static async get(path: string) {
@@ -122,7 +122,7 @@ export default class EmaApiClient {
     }
 
     private static createUrl(path: string) {
-        // return `http://localhost:3004${path}`;
-        return `https://jsonplaceholder.typicode.com/users`;
+        return `http://localhost:3003${path}`;
+        // return `https://jsonplaceholder.typicode.com/users`;
     }
 }
