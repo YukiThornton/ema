@@ -122,7 +122,6 @@ export default class EmaApiClient {
     }
 
     private static createUrl(path: string) {
-        return `http://localhost/api${path}`;
-        // return `https://jsonplaceholder.typicode.com/users`;
+        return `${process.env.VUE_APP_API_URL}${path}`;
     }
 }
