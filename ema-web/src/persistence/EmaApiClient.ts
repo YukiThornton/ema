@@ -122,7 +122,7 @@ export default class EmaApiClient {
     }
 
     private static createUrl(path: string) {
-        return `http://localhost:3003${path}`;
+        return `http://localhost/api${path}`;
         // return `https://jsonplaceholder.typicode.com/users`;
     }
 }

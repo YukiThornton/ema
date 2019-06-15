@@ -34,9 +34,5 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 80
-  - name: ema-api
-    protocol: TCP
-    port: 3003
-    targetPort: 3003
   selector:
     app: ema-web
