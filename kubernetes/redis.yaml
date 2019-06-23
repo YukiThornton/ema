@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: redis-deployment
+  name: redis-stset
   labels:
     app: redis
 spec:
+  serviceName: "redis"
   replicas: 1
   selector:
     matchLabels:
@@ -19,6 +20,18 @@ spec:
         image: redis:5.0.5-alpine
         ports:
           - containerPort: 6379
+        volumeMounts:
+        - name: redis-volume
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: local-storage
 ---
 apiVersion: v1
 kind: Service
