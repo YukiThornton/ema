@@ -17,8 +17,17 @@ export class DbClient {
         this.redisClient = new Redis(6379, 'redis');
     }
 
-    async saveEma(ema: Ema): Promise<0 | 1> {
-        return this.redisClient.hmset('ema2', this.fromEma(ema))
+    async saveEma(ema: Ema): Promise<Ema> {
+        // TODO: transaction
+        const id = (await this.getAllKeys()).map(k => Number(k.substr(3))).reduce((a, b) => Math.max(a, b)) + 1;
+        const emaWithId = {...ema, id: id}
+        await this.redisClient.hmset(`ema${id}`, this.fromEma(emaWithId))
+        return this.getEma(id)
+    }
+
+    async getEma(id: number): Promise<Ema> {
+        const redisEma = await this.redisClient.hgetall(`ema${id}`);
+        return this.toEma(redisEma);
     }
 
     async getAllKeys(): Promise<string[]> {
@@ -38,7 +47,7 @@ export class DbClient {
         keys.forEach(key => pipe.hgetall(key));
         const results: Array<[Error, RedisEma]> = await pipe.exec();
 
-        results.map(result => result[0]).filter(error => !error).forEach(console.error)
+        results.map(result => result[0]).filter(error => error != null).forEach(console.error)
         return results.map(result => result[1]);
     }
 

@@ -1,20 +1,19 @@
 import express from 'express';
+import dbClient from '../persistence/db-client';
+import Ema from '../models/ema';
 
 const router = express.Router();
 
-const localEmaCreationResult = {
-    result: 'ok',
-    ema: {
-        'id': 99,
-        'user-id': 1,
-        'type': 'wish',
-        'status': 'open',
-        'content': {
-            text: 'localEmaCreationResult',
-        },
-    },
-};
+function createResultJson(ema: Ema) {
+    return {
+        result: 'ok',
+        ema: ema,
+    }
+}
 
-router.post('/', (req, res) => res.status(201).json(localEmaCreationResult))
+router.post('/', async (req, res) => {
+    const createdEma = await dbClient.saveEma(req.body);
+    return res.status(201).json(createResultJson(createdEma));
+})
 
 export default router;

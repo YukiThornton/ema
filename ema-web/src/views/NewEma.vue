@@ -1,6 +1,7 @@
 <template lang="pug">
   div
-    h1 New Ema
+    h1 Write Your Ema
+    input(type='text' v-model='text')
     button(@click='onCreateEma') Create
 </template>
 
@@ -14,9 +15,10 @@ import { mapActions } from 'vuex';
 })
 export default class NewEma extends Vue {
   private createEma!: (contentText: string) => void;
+  private text = '';
 
   private onCreateEma() {
-    this.createEma('create ema from NewEma page');
+    this.createEma(this.text);
   }
 }
 </script>
