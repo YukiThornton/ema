@@ -1,6 +1,6 @@
 <template lang="pug">
   .ema-list
-    EmaPlaque(v-for='ema in emas' :ema='ema' :key='ema.id')
+    EmaPlaque(v-for='ema in emas' :text='ema.content.text' :key='ema.id')
 </template>
 
 <script lang="ts">
@@ -30,6 +30,7 @@ export default class EmaList extends Vue {
 <style scoped lang="scss">
 .ema-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 </style>

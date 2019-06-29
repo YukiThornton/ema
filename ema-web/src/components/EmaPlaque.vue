@@ -1,7 +1,7 @@
 <template lang="pug">
   .plaque
     .text-area
-      .text {{ ema.content.text }}
+      .text {{ text }}
 </template>
 
 <script lang="ts">
@@ -10,7 +10,7 @@ import Ema from '@/models/Ema';
 
 @Component
 export default class EmaPlaque extends Vue {
-  @Prop(Ema) private ema!: Ema;
+  @Prop(String) private text!: string;
 }
 </script>
 
@@ -46,6 +46,7 @@ export default class EmaPlaque extends Vue {
       font-family: 'Itim', 'komorebi-gothic-P', 'Meiryo', sans-serif;
       font-size: 13px;
       line-height: 1.2;
+      white-space: pre-line;
     }
   }
 }
