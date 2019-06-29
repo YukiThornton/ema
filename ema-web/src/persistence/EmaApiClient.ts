@@ -97,7 +97,9 @@ export default class EmaApiClient {
             },
         };
         const response = await this.post('/ema', body);
-        if (response.status !== 201) {
+        if (response.status === 400) {
+          throw new Error((await response.json()).cause);
+        } else if (response.status !== 201) {
             throw new Error(`createEma returns ${response.status}`);
         }
         return (await response.json()) as EmaCreationJson;

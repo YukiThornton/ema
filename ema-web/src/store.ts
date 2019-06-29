@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     emas: [] as Ema[],
+    errorMessage: undefined as string | undefined,
   },
   mutations: {
     setEmas(state, emas: Ema[]) {
@@ -17,14 +18,24 @@ export default new Vuex.Store({
     addEma(state, ema: Ema) {
       state.emas = [...state.emas, ema];
     },
+    setError(state, message: string | undefined) {
+      state.errorMessage = message;
+    },
   },
   actions: {
-    async searchEmas(context) {
-      context.commit('setEmas', EmaFactory.createListFromJson(await EmaApiClient.getAllEmas()));
+    async searchEmas({ commit }) {
+      commit('setEmas', EmaFactory.createListFromJson(await EmaApiClient.getAllEmas()));
     },
-    async createEma(context, contentText: string) {
-      context.commit('addEma', EmaFactory.createEmaFromJson(await EmaApiClient.createEma(99, contentText)));
+    async createEma({ commit }, contentText: string) {
+      try {
+        commit('addEma', EmaFactory.createEmaFromJson(await EmaApiClient.createEma(99, contentText)));
+      } catch (e) {
+        commit('setError', e.message);
+      }
     },
+    clearError({ commit }) {
+      commit('setError', undefined);
+    }
   },
 });
 
