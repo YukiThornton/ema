@@ -1,5 +1,6 @@
 import Redis from 'ioredis';
 import Ema from '../models/ema';
+import EmaContent from '../models/emaContent';
 
 interface RedisEma {
     readonly id: number;
@@ -17,11 +18,17 @@ export class DbClient {
         this.redisClient = new Redis(6379, 'redis');
     }
 
-    async saveEma(ema: Ema): Promise<Ema> {
+    async saveEma(userId: number, type: string, status: string, text: string): Promise<Ema> {
         // TODO: transaction
         const id = (await this.getAllKeys()).map(k => Number(k.substr(3))).reduce((a, b) => Math.max(a, b)) + 1;
-        const emaWithId = {...ema, id: id}
-        await this.redisClient.hmset(`ema${id}`, this.fromEma(emaWithId))
+        const ema = {
+          id,
+          'user-id': userId,
+          type,
+          status,
+          text,
+        } as RedisEma;
+        await this.redisClient.hmset(`ema${id}`, ema)
         return this.getEma(id)
     }
 
@@ -52,25 +59,13 @@ export class DbClient {
     }
 
     private toEma(redisEma: RedisEma): Ema {
-        return {
-            id: Number(redisEma.id),
-            userId: Number(redisEma['user-id']),
-            type: redisEma.type,
-            status: redisEma.status,
-            content: {
-                text: redisEma.text,
-            }
-        }
-    }
-
-    private fromEma(ema: Ema): RedisEma {
-        return {
-            id: ema.id,
-            'user-id': ema.userId,
-            type: ema.type,
-            status: ema.status,
-            text: ema.content.text,
-        }
+        return new Ema(
+            Number(redisEma.id),
+            Number(redisEma['user-id']),
+            redisEma.type,
+            redisEma.status,
+            new EmaContent(redisEma.text)
+        );
     }
 }
 const client = new DbClient();

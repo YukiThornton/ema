@@ -19,11 +19,11 @@ function createErrorResultJson() {
 }
 
 router.post('/', async (req, res) => {
-  const ema = req.body as Ema;
-  if (!ema.content || !ema.content.text) {
+  const body = req.body;
+  if (!body.content || !body.content.text) {
     return res.status(400).json(createErrorResultJson())
   }
-  const createdEma = await dbClient.saveEma(ema);
+  const createdEma = await dbClient.saveEma(Number(body.userId), body.type, body.status, body.content.text);
   return res.status(201).json(createResultJson(createdEma));
 })
 
