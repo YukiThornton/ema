@@ -8,12 +8,12 @@ export default class EmaFactory {
             return [];
         }
         return json.emas.map((ema) => {
-            return new Ema(ema.id, ema['user-id'], ema.type, ema.status, new EmaContent(ema.content.text));
+            return new Ema(ema.id, ema.userId, ema.type, ema.status, new EmaContent(ema.content.text));
         });
     }
 
     public static createEmaFromJson(json: EmaCreationJson): Ema {
         const ema = json.ema;
-        return new Ema(ema.id, ema['user-id'], ema.type, ema.status, new EmaContent(ema.content.text));
+        return new Ema(ema.id, ema.userId, ema.type, ema.status, new EmaContent(ema.content.text));
     }
 }

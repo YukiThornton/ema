@@ -6,7 +6,7 @@ const json = `{
     "emas": [
         {
             "id": 1,
-            "user-id": 1,
+            "userId": 1,
             "type": "wish",
             "status": "open",
             "content": {
@@ -15,7 +15,7 @@ const json = `{
         },
         {
             "id": 2,
-            "user-id": 1,
+            "userId": 1,
             "type": "goal",
             "status": "open",
             "content": {

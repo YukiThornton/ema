@@ -54,7 +54,7 @@ export class DbClient {
     private toEma(redisEma: RedisEma): Ema {
         return {
             id: Number(redisEma.id),
-            'user-id': Number(redisEma['user-id']),
+            userId: Number(redisEma['user-id']),
             type: redisEma.type,
             status: redisEma.status,
             content: {
@@ -66,7 +66,7 @@ export class DbClient {
     private fromEma(ema: Ema): RedisEma {
         return {
             id: ema.id,
-            'user-id': ema['user-id'],
+            'user-id': ema.userId,
             type: ema.type,
             status: ema.status,
             text: ema.content.text,
