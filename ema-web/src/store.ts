@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Ema from '@/models/Ema';
 import EmaFactory from './models/factories/EmaFactory';
-import EmaApiClient from './persistence/EmaApiClient';
+import EmaApiClient from './api/EmaApiClient';
 
 Vue.use(Vuex);
 

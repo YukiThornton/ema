@@ -30,7 +30,7 @@ export default class EmaApiClient {
               text: contentText,
             },
         };
-        const response = await this.post('/ema', body);
+        const response = await this.post('/emas', body);
         if (response.status === 400) {
           throw new Error((await response.json()).cause);
         } else if (response.status !== 201) {
