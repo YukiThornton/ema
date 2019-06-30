@@ -12,11 +12,6 @@ export interface EmaListJson {
     emas: EmaJson[];
 }
 
-export interface EmaCreationJson {
-    result: string;
-    ema: EmaJson;
-}
-
 export default class EmaApiClient {
     public static async getAllEmas(): Promise<EmaListJson> {
         const response = await this.get('/emas');
@@ -26,7 +21,7 @@ export default class EmaApiClient {
         return (await response.json()) as EmaListJson;
 }
 
-    public static async createEma(userId: number, contentText: string): Promise<EmaCreationJson> {
+    public static async createEma(userId: number, contentText: string): Promise<boolean> {
         const body = {
             userId: userId,
             type: 'wish',
@@ -39,9 +34,17 @@ export default class EmaApiClient {
         if (response.status === 400) {
           throw new Error((await response.json()).cause);
         } else if (response.status !== 201) {
-            throw new Error(`createEma returns ${response.status}`);
+          throw new Error(`createEma returns ${response.status}`);
         }
-        return (await response.json()) as EmaCreationJson;
+        return true;
+    }
+
+    public static async deleteEma(id: number): Promise<boolean> {
+      const response = await this.delete(`/emas/${id}`);
+      if (response.status === 500) {
+        throw new Error(`Failed to delete ema (id:${id})`)
+      }
+      return true;
     }
 
     private static async get(path: string) {
@@ -56,7 +59,13 @@ export default class EmaApiClient {
         });
     }
 
-    private static createUrl(path: string) {
+    private static async delete(path: string) {
+      return await fetch(this.createUrl(path), {
+            method: 'DELETE'
+      });
+  }
+
+  private static createUrl(path: string) {
         return `${process.env.VUE_APP_API_URL}${path}`;
     }
 }

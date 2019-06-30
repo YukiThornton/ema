@@ -23,12 +23,25 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async searchEmas({ commit }) {
-      commit('setEmas', EmaFactory.createListFromJson(await EmaApiClient.getAllEmas()));
-    },
-    async createEma({ commit }, contentText: string) {
+    async getAllEmas({ commit }) {
       try {
-        commit('addEma', EmaFactory.createEmaFromJson(await EmaApiClient.createEma(99, contentText)));
+        commit('setEmas', EmaFactory.createListFromJson(await EmaApiClient.getAllEmas()));
+      } catch (e) {
+        commit('setError', e.message);
+      }
+    },
+    async createEma({ commit, dispatch }, contentText: string) {
+      try {
+        await EmaApiClient.createEma(99, contentText)
+        dispatch('getAllEmas');
+      } catch (e) {
+        commit('setError', e.message);
+      }
+    },
+    async deleteEma({ commit, dispatch }, id: number) {
+      try {
+        await EmaApiClient.deleteEma(id);
+        dispatch('getAllEmas');
       } catch (e) {
         commit('setError', e.message);
       }

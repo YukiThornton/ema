@@ -1,5 +1,8 @@
 <template lang="pug">
-  .plaque
+  .plaque(
+    :class='{clickable: clickable}'
+    @click='clickable ? $emit("emaClicked") : undefined'
+  )
     .text-area
       .text {{ text }}
 </template>
@@ -11,6 +14,7 @@ import Ema from '@/models/Ema';
 @Component
 export default class EmaPlaque extends Vue {
   @Prop(String) private text!: string;
+  @Prop(Boolean) private clickable!: boolean;
 }
 </script>
 
@@ -49,5 +53,9 @@ export default class EmaPlaque extends Vue {
       white-space: pre-line;
     }
   }
+}
+
+.clickable {
+  cursor: pointer;
 }
 </style>

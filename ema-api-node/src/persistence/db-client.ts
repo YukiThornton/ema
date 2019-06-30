@@ -28,12 +28,12 @@ export class DbClient {
           status,
           text,
         } as RedisEma;
-        await this.redisClient.hmset(`ema${id}`, ema)
+        await this.redisClient.hmset(this.createEmaKey(id), ema)
         return this.getEma(id)
     }
 
     async getEma(id: number): Promise<Ema> {
-        const redisEma = await this.redisClient.hgetall(`ema${id}`);
+        const redisEma = await this.redisClient.hgetall(this.createEmaKey(id));
         return this.toEma(redisEma);
     }
 
@@ -47,6 +47,14 @@ export class DbClient {
 
         const redisEmas = await this.getRedisEmas(keys);
         return redisEmas.map(this.toEma)
+    }
+
+    async deleteEma(id: number): Promise<number> {
+      return this.redisClient.del(this.createEmaKey(id));
+    }
+
+    private createEmaKey(id: number) {
+      return `ema${id}`;
     }
 
     private async getRedisEmas(keys: string[]): Promise<RedisEma[]> {

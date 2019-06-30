@@ -1,11 +1,11 @@
 <template lang="pug">
-  .edit-page-mask
+  .edit-page.mask
     BasicModal(v-if='showModal' @close='showModal = false')
       span(slot='header') Failed to Create Your Ema
       span(slot='body') {{ modalMessage }}
     .edit-and-preview
       .preview-area
-        EmaPlaque(:text='text')
+        EmaPlaque(:text='text' :clickable='false')
       .edit-area
         textarea(v-model='text' rows='9' cols='36' placeholder='Write down your wish here...')
       .button-area
@@ -20,7 +20,7 @@ import { mapActions, mapState } from 'vuex';
 import { Watch } from 'vue-property-decorator';
 import BasicModal from '@/components/BasicModal.vue';
 import EmaPlaque from '@/components/EmaPlaque.vue';
-import Ema from '../../../ema-api-node/src/models/ema';
+import Ema from '../models/Ema';
 
 @Component({
   components: { BasicModal, EmaPlaque },
@@ -60,32 +60,8 @@ export default class NewEma extends Vue {
 </script>
 
 <style lang="scss" scoped>
-textarea {
-  resize: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-.btn {
-  margin: 10px;
-  padding: 8px 24px;
-  border-width: 0;
-  font-size: 16px;
-  border-radius: 3px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.6);
-}
-
-.edit-page-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.edit-page {
   padding-top: 42px;
-  background-color: rgba(0, 0, 0, .5);
 }
 
 .submit-button {

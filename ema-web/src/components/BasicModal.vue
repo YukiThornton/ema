@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal-mask
+  .basic-modal.mask
     .modal-wrapper(@click='$emit("close")')
       .modal-container(@click.stop)
         .header
@@ -8,27 +8,21 @@
         .body
           slot(name='body') Try again later, ok?
         .footer
-          button.close-button(@click='$emit("close")') OK
+          slot(name='footer')
+            button.btn.cancel(@click='$emit("close")') OK
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component';
+
 @Component({})
 export default class BasicModal extends Vue {
-
 }
 </script>
 
 <style lang="scss" scoped>
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+.basic-modal {
   display: table;
   transition: opacity .3s ease;
 }
@@ -61,10 +55,6 @@ export default class BasicModal extends Vue {
 .footer {
   display: flex;
   justify-content: flex-end;
-
-  button {
-    color: #777;
-  }
 }
 
 </style>

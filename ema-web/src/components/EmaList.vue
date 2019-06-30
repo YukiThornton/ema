@@ -1,6 +1,12 @@
 <template lang="pug">
   .ema-list
-    EmaPlaque(v-for='ema in emas' :text='ema.content.text' :key='ema.id')
+    EmaPlaque(
+      v-for='ema in emas'
+      :key='ema.id'
+      :text='ema.content.text'
+      :clickable='true'
+      @emaClicked='$emit("emaClicked", ema)'
+    )
 </template>
 
 <script lang="ts">
@@ -12,15 +18,15 @@ import Ema from '@/models/Ema';
 @Component({
   components: { EmaPlaque },
   computed: mapState(['emas']),
-  methods: mapActions(['searchEmas']),
+  methods: mapActions(['getAllEmas']),
 })
 export default class EmaList extends Vue {
   private emas!: Ema[];
-  private searchEmas!: () => {};
+  private getAllEmas!: () => {};
 
   private mounted() {
     if (this.emas.length === 0) {
-      this.searchEmas();
+      this.getAllEmas();
     }
   }
 }
