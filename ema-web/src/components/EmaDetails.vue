@@ -28,10 +28,10 @@ import { mapActions } from 'vuex';
 
 @Component({
   components: { EmaPlaque, BasicModal },
-  methods: mapActions(['deleteEma'])
+  methods: mapActions(['deleteEma']),
 })
 export default class EmaDetails extends Vue {
-  @Prop(Ema) ema!: Ema;
+  @Prop(Ema) private ema!: Ema;
   private deleteEma: (id: number) => void;
 
   private shouldShowModal = false;

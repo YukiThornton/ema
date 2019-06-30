@@ -32,7 +32,7 @@ export default new Vuex.Store({
     },
     async createEma({ commit, dispatch }, contentText: string) {
       try {
-        await EmaApiClient.createEma(99, contentText)
+        await EmaApiClient.createEma(99, contentText);
         dispatch('getAllEmas');
       } catch (e) {
         commit('setError', e.message);
@@ -48,7 +48,7 @@ export default new Vuex.Store({
     },
     clearError({ commit }) {
       commit('setError', undefined);
-    }
+    },
   },
 });
 

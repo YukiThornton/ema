@@ -23,7 +23,7 @@ export default class EmaApiClient {
 
     public static async createEma(userId: number, contentText: string): Promise<boolean> {
         const body = {
-            userId: userId,
+            userId,
             type: 'wish',
             status: 'open',
             content: {
@@ -42,7 +42,7 @@ export default class EmaApiClient {
     public static async deleteEma(id: number): Promise<boolean> {
       const response = await this.delete(`/emas/${id}`);
       if (response.status === 500) {
-        throw new Error(`Failed to delete ema (id:${id})`)
+        throw new Error(`Failed to delete ema (id:${id})`);
       }
       return true;
     }
@@ -61,7 +61,7 @@ export default class EmaApiClient {
 
     private static async delete(path: string) {
       return await fetch(this.createUrl(path), {
-            method: 'DELETE'
+            method: 'DELETE',
       });
   }
 

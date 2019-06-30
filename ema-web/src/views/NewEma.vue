@@ -47,14 +47,14 @@ export default class NewEma extends Vue {
 
   @Watch('errorMessage')
   private handleError() {
-    if (this.errorMessage === undefined) return;
-    this.showErrorDialog(this.errorMessage)
+    if (this.errorMessage === undefined) { return; }
+    this.showErrorDialog(this.errorMessage);
     this.clearError();
   }
 
   @Watch('emas')
   private backToPreviousPage() {
-    this.$router.go(-1)
+    this.$router.go(-1);
   }
 }
 </script>
